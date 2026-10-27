@@ -1117,8 +1117,8 @@ body {
 .scratch-card {
     position: relative;
     flex: 0 0 auto;
-    width: 220px;
-    aspect-ratio: 9 / 16;
+    width: 270px;
+    aspect-ratio: 3 / 4;
     border-radius: 10px;
     border: 2px solid rgba(230, 168, 0, 0.4) !important;
     box-shadow: 0 4px 10px rgba(200, 150, 0, 0.3) !important;
@@ -1188,7 +1188,7 @@ body {
 
 .polaroid img {
     width: 100%;
-    aspect-ratio: 1/1;
+    aspect-ratio: 3 / 4;
     object-fit: cover;
 }
 
@@ -1477,6 +1477,10 @@ body {
 
     .glass-panel .scroll-hint {
         font-size: 0.7rem;
+    }
+
+    .scratch-card {
+        width: clamp(260px, 78vw, 320px);
     }
 
     .polaroid-grid {

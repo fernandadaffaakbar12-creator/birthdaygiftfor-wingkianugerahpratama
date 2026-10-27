@@ -245,7 +245,7 @@
         const pinPopupClose = document.getElementById('pin-popup-close');
 
         // DEFAULT PIN: Silakan ubah angka ini jika ingin PIN lain
-        const SECRET_PIN = "0000";
+        const SECRET_PIN = "1404";
 
         let pinAttempt = 0;
         let popupTimeout = null;
@@ -366,22 +366,22 @@
                                 closePinPopup();
                                 setTimeout(() => {
                                     const pinScreen = document.getElementById('pin-screen');
-                                    
+
                                     // 1. Fade out PIN screen
                                     pinScreen.classList.remove('active');
 
                                     // 2. Wait for fade out to complete (1 detik)
                                     setTimeout(() => {
                                         pinScreen.style.display = 'none';
-                                        
+
                                         const loadingScreen = document.getElementById('mini-game-screen');
                                         if (loadingScreen) {
                                             loadingScreen.style.display = 'flex';
-                                            
+
                                             // 3. Jeda sedikit lalu jalankan Fade in Mini Game
                                             setTimeout(() => {
                                                 loadingScreen.style.opacity = '1';
-                                                
+
                                                 // 4. Inisialisasi game setelah mulai muncul
                                                 initMiniGame();
                                             }, 50);
@@ -395,22 +395,22 @@
                                 closePinPopup();
                                 setTimeout(() => {
                                     const pinScreen = document.getElementById('pin-screen');
-                                    
+
                                     // 1. Fade out PIN screen
                                     pinScreen.classList.remove('active');
 
                                     // 2. Wait for fade out to complete (1 detik)
                                     setTimeout(() => {
                                         pinScreen.style.display = 'none';
-                                        
+
                                         const loadingScreen = document.getElementById('mini-game-screen');
                                         if (loadingScreen) {
                                             loadingScreen.style.display = 'flex';
-                                            
+
                                             // 3. Jeda sedikit lalu jalankan Fade in Mini Game
                                             setTimeout(() => {
                                                 loadingScreen.style.opacity = '1';
-                                                
+
                                                 // 4. Inisialisasi game setelah mulai muncul
                                                 initMiniGame();
                                             }, 50);
@@ -522,12 +522,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 // C. JIKA YANG DIKLIK ADALAH POLAROID
                 else if (this.classList.contains('polaroid')) {
                     modalImg.src = this.querySelector('img').src;
-                    modalImg.style.aspectRatio = "1 / 1";
+                    modalImg.style.aspectRatio = "3 / 4";
                 }
                 // D. JIKA YANG DIKLIK ADALAH GALERI CINTA
                 else {
                     modalImg.src = this.src;
-                    modalImg.style.aspectRatio = "9 / 16";
+                    modalImg.style.aspectRatio = "3 / 4";
                 }
 
                 modal.classList.add('show-modal');
@@ -862,12 +862,16 @@ document.addEventListener('DOMContentLoaded', () => {
     canvases.forEach((canvas, index) => {
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
-        let brushRadius = 25;
+        let brushRadius = 28;
         let drawMoveCount = 0;
 
         setTimeout(() => {
-            canvas.width = 220;
-            canvas.height = Math.round(220 * 16 / 9);
+            const card = canvas.closest('.scratch-card');
+            const cardRect = card ? card.getBoundingClientRect() : canvas.getBoundingClientRect();
+            const w = Math.round(cardRect.width || canvas.offsetWidth || 270);
+            const h = Math.round(cardRect.height || canvas.offsetHeight || Math.round(w * 4 / 3));
+            canvas.width = w;
+            canvas.height = h;
 
             ctx.fillStyle = '#FFF8E1';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -921,8 +925,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const canvasRect = canvas.getBoundingClientRect();
-                const x = clientX - canvasRect.left;
-                const y = clientY - canvasRect.top;
+                const scaleX = canvas.width / canvasRect.width;
+                const scaleY = canvas.height / canvasRect.height;
+                const x = (clientX - canvasRect.left) * scaleX;
+                const y = (clientY - canvasRect.top) * scaleY;
 
                 ctx.lineWidth = brushRadius * 2;
                 ctx.lineCap = 'round';
